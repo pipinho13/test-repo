@@ -1,0 +1,98 @@
+---
+title: "Motor Trend Car Road Analysis"
+output: word_document
+---
+###Brief
+
+Motor Trend is a magazine about the automobile industry and they are interested in exploring the relationship between a set of variables and miles per gallon. 
+They are particularly interested in the following two questions:
+
+“Is an automatic or manual transmission better for MPG” 
+
+"Quantify the MPG difference between automatic and manual transmissions"
+
+###Summary
+
+For this analysis we considered the dataset of mtcars. The initial aim is to find if there is a relationship between MPG and transmissions and also 
+to try to build a regression model in order to quantify the MPG difference between automatic and manual transmissions. Finally in order to come up with
+the most appropriate model we examine also other variables and we kept also the most statistical significant using the "stepwise" process.
+
+
+###Data Analysis
+
+
+Libraries used
+
+```{r, message=F, warning=F }
+library(ggplot2)
+library(MASS)
+```
+
+###Exploratory Analysis
+
+
+```{r}
+str(mtcars)
+```
+
+A boxplot shows that the Manual Transmission has higher MPG than the Automatic
+```{r}
+qplot(factor(mtcars$am, labels = c("Automatic", "Manual")), mtcars$mpg, data=mtcars, geom="boxplot", xlab='Transmission', ylab='Miles per Gallon', main='Miles/Gallon per Transmission')
+```
+
+Also a T-test confirms that there is statistical difference in Transmission regarding the MPG (P-Value<0.05)
+
+```{r}
+t.test(mtcars$mpg~mtcars$am,conf.level=0.95)
+```
+
+###Regression Analysis
+
+
+
+###Stepwise Regression
+
+At this point we are going to run a regression model using al the variales and by applying the stepwise algorith we are going to keep the 
+most appropriate variables
+
+```{r}
+stepwisemodel = step(lm(data = mtcars, mpg ~ .), trace=0, direction=c("both"))
+summary(stepwisemodel)
+```
+The model suggests that we should keep the variables wt, qsec and am in order to explain the MPG. 
+Explanation of the coefficient variables
+
+Every lb/1000 weight increase will cause a decrease of roughly 3.9 MPG
+
+Every increase of 1/4 mile time will cause an increase of 1.2 MPG, and on average, 
+
+On average a manual transmission leads to 2.93 more MPG than the automatic
+
+The model is able to explain 85% of variance and the residual plots shows to be distributed normally 
+
+
+###Conclusion
+
+The MPG can be explained by the "weight" the "mile time" and the "transmission". However maybe there exist other factors who can explain better the MPG.
+
+
+The plot below shows the data that we have chosen in order to explain the MPG
+
+```{r}
+mtcars$amf <- factor(mtcars$am, labels = c("Automatic", "Manual"))
+qplot(wt, mpg, data=mtcars, col=amf, size=qsec)
+```
+
+###Appendix
+
+A pairwise scatter plot can help us to see the correlation between all the variables 
+
+```{r}
+pairs(mtcars)
+```
+
+And the residual plots of the final suggested model
+```{r}
+par(mfrow=c(2,2))
+plot(stepwisemodel)
+```
