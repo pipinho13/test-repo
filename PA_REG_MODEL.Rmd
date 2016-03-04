@@ -3,7 +3,7 @@ title: "Motor Trend Car Road Analysis"
 output: word_document
 ---
 ###Brief
-
+View the report at the following link: https://rpubs.com/pipinho13/124740
 Motor Trend is a magazine about the automobile industry and they are interested in exploring the relationship between a set of variables and miles per gallon. 
 They are particularly interested in the following two questions:
 
