@@ -1,6 +1,6 @@
 # Business Analytics
 # Data Mining Cup Introduction
-# Using Care package
+# Using Caret package
 # Please note, that this script only has the nature of proposal. It provides useful functions for the steps of data mining but does not cover all possibilities.
 
 # The caret package is used (http://topepo.github.io/caret/index.html)
